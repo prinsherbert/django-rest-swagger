@@ -48,6 +48,8 @@ def get_full_base_path(request):
     except KeyError:
         return request.build_absolute_uri(request.path).rstrip('/')
     else:
+        if base_path.startswith('http://') or base_path.startswith('https://'):
+            return base_path
         protocol = 'https' if request.is_secure() else 'http'
         return '{0}://{1}'.format(protocol, base_path.rstrip('/'))
 
