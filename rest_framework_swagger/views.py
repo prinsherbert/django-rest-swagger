@@ -138,6 +138,8 @@ class SwaggerResourcesView(APIDocView):
             return self.request.build_absolute_uri(
                 self.request.path).rstrip('/')
         else:
+            if base_path.startswith('http://') or base_path.startswith('https://'):
+                return '{0}/{1}'.format(base_path.rstrip('/'), 'api-docs')
             protocol = 'https' if self.request.is_secure() else 'http'
             return '{0}://{1}/{2}'.format(protocol, base_path, 'api-docs')
 
